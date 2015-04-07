@@ -3,7 +3,7 @@
 //  Who Am I
 //
 //  Created by Larry Wells on 5/24/14.
-//  Copyright (c) 2014 Larry Wells. All rights reserved.
+//  Copyright (c) 2015 Larry Wells. All rights reserved.
 //
 
 #import "WhoAmIAppDelegate.h"
@@ -57,14 +57,10 @@
     if ([fileManager fileExistsAtPath:whoamiPlist])
     {
         [chk_runatstartup setState:1];
-      //  NSLog(@"plist exist");
-      //  NSLog(@"%ld",(long)[chk_runatstartup state]);
     }
     else
     {
         [chk_runatstartup setState:0];
-     //   NSLog(@"plist does not exist");
-      //  NSLog(@"%ld",(long)[chk_runatstartup state]);
     }
     
     
@@ -131,15 +127,12 @@
             }
 
         }
-        
-        
+
     }
     @catch (NSException *e)
     {
         //NSLog(@"Exception: %@", e);
     }
-   // [self cleanupMenuItems];
-    //[self printallArrayItems];
     
 }
 
@@ -168,7 +161,6 @@
 }
 
 
-
 //Run at Startup Check Box
 - (IBAction)chk_runatStartup:(NSButtonCell *)sender
 {
@@ -177,14 +169,7 @@
     NSString *whoamiPlist = [[[NSBundle mainBundle]resourcePath ]stringByAppendingPathComponent:@"com.WhoAmI.plist"];
     NSString *userDir = [NSHomeDirectory() stringByAppendingPathComponent:@"/Library/LaunchAgents/com.WhoAmI.plist"];
     NSString *delPlist = [NSHomeDirectory() stringByAppendingPathComponent:@"/Library/LaunchAgents/com.WhoAmI.plist"];
-    
-    //Log Out Dirs
-   // NSLog(@"%ld",(long)[chk_runatstartup state]);
-   // NSLog(@"%@", whoamiPlist);
-   // NSLog(@"%@", userDir);
-   /// NSLog(@"%@", delPlist);
-    
-    
+  
     //Check if chk_box is on or not.
     NSError *copyError;
     
@@ -194,8 +179,6 @@
         NSFileManager *fileManager = [[NSFileManager alloc] init];
         if ([fileManager fileExistsAtPath:userDir] == NO)
             [fileManager copyItemAtPath:whoamiPlist toPath:userDir error:&copyError];
-        //NSLog(@"CHKBOX ON");
-        //NSLog(@"%@",copyError);
     }
     
     //Delete com.WhoAmI.plist from ~/Library/LaunchAgents
@@ -204,8 +187,6 @@
         NSFileManager *fileManager = [[NSFileManager alloc] init];
         if ([fileManager fileExistsAtPath:delPlist] == YES)
             [fileManager removeItemAtPath:delPlist error:&copyError];
-        //NSLog(@"CHKBOX OFF");
-        //NSLog(@"%@",copyError);
     }
     
 }
@@ -220,11 +201,9 @@
     if (useNotificats == YES)
     {
         return YES;
-       // NSLog(@"Use Notifications YES");
     }
     else
         return NO;
-  //  NSLog(@"Use Notifications NO");
 }
 
 //chk_userNotifications is checked
@@ -234,16 +213,13 @@
     if ([chk_useNotifications state] == NSOnState)
     {
         [userSettings setBool:YES forKey:@"useNotifications"];
-        //NSLog(@"Notifications ON");
     }
     else
     {
         [userSettings setBool:NO forKey:@"useNotifications"];
-     //   NSLog(@"Notifications OFF");
     }
     
-    [userSettings synchronize]; 
-   // NSLog(@"%d",[userSettings boolForKey:@"useNotifications"]);
+    [userSettings synchronize];
 }
 
 
@@ -276,11 +252,7 @@
             [statusMenu insertItem:newItem atIndex:1];
             [self createUserNotification:YES value:ip];
         }
-        
     }
-    
-    
-   
 }
 
 //Remove old IP addresses from menuitem
@@ -288,7 +260,6 @@
 {
     [statusMenu removeItem:[statusMenu itemWithTitle:ip]];
     [self createUserNotification:NO value:ip];
-    
 }
 
 
@@ -296,8 +267,6 @@
 - (void) dealloc
 {
     //TODO:
-    
-    
 }
 
 //Copies computer name to clipboard
@@ -320,6 +289,7 @@
     }
 }
 
+//User Notification Setup and Delivery
 - (void) createUserNotification:(bool)add value: (NSString*)item
 {
     NSUserNotification *notification = [[NSUserNotification alloc] init];
